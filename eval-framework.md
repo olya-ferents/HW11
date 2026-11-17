@@ -82,7 +82,14 @@
 | Суддя не потрапляє в щоденний шар (поле `gate`) | `--dry-run`: суддя 0; `GATE=all --dry-run`: суддя 40 | так |
 | `tests/manual/` і `tests/generated/` — окремий вхід, а не набір кейсів | рядок `unit-тести L11: manual — 7, generated — 23` у `--dry-run`, поза таблицею наборів | так |
 
-**Словник оракулів для `JNT-026`:** `engine:disputes` (очікуване рушія з кейса), `tool:check_dispute_eligibility` (перший виклик із трейсу або `None`), `state:customers` (рядок `CUS-0006`), `state:disputes` (рядки по `TX-0601`). На кроці 3 (до кроку 5) прогін `SET=l12` давав рядок `SKIP … КРОК 5 … ; оракули зібрано: engine:disputes, tool:check_dispute_eligibility, state:customers, state:disputes`.
+**Словник оракулів для `JNT-026`:** `engine:disputes` (очікуване рушія з кейса), `tool:check_dispute_eligibility` (перший виклик із трейсу або `None`), `state:customers` (рядок `CUS-0006`), `state:disputes` (рядки по `TX-0601`). Рядок `SKIP` із прогону `SET=l12` зі ще не написаною спільною перевіркою (відтворено заглушкою `joint_checks`, запис видалено з `reports/`):
+
+```text
+SKIP  l12  JNT-026      joint
+        КРОК 5: joint_checks() ще не написано; оракули зібрано: engine:disputes, tool:check_dispute_eligibility, state:customers, state:disputes
+```
+
+код повернення 1 — пропущений кейс не зелений.
 
 **Вивід `--dry-run`:**
 
@@ -147,7 +154,7 @@
 
 **Що читає спільна assertion (одне речення):** вона читає одразу `engine:disputes`, `tool:check_dispute_eligibility` і `state:disputes` та падає, коли рушій каже «не можна», а інструмент каже «можна» або в `disputes` з'явився рядок по транзакції — кожне джерело окремо праве, разом ні.
 
-**Знахідки в наборі:** на чистому стенді стабільно червоні не через контур: `DIS-002-N` (not_regex), `ORD-001` (exact_tool_calls), `DIS-006`, `DIS-007`, `TOOL-402` (tool_result_flag: `eligible = None`), `TOOL-407` (state_row: 0 рядків по `TX-0202`) — вина набору й агента, зазначена в застереженні теми.
+**Знахідки в наборі:** п'ять кейсів без `customer_id` у кейсі — `DIS-002-N`, `DIS-004-N`, `DIS-006`, `DIS-007` (L03) і `TOOL-402` (L07): стенд відповідає «no customer is signed in», тому вони червоні на будь-якому промпті — вада набору; `ORD-001` червоний через поведінку агента (зайвий виклик `get_account`); `TOOL-407` періодично червоний через шум. Кейси не правили: правка змінила б `set_hash`, і записи кроку 4 не можна було б покласти поруч. Фактично на щоденному шарі виходило 64–66 зелених із 71 (± кейс шуму), що збігається з орієнтиром еталона.
 
 **Відповідь агента з `D26`** (перші 200 символів із запису): `The dispute for transaction TX-0601 is now open under the reason "goods not received" (dispute ID 1, status: open). The eligibility check passed on the reason, transaction status, and dispute window.` — текст правдивий, дефект видно лише в стані.
 
