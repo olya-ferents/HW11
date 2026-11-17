@@ -84,7 +84,8 @@ def set_hash(names: list[str], ids: list[str]) -> str:
     cases = {}
     for name in names:
         cases.update(_raw_cases(name))
-    blob = "\n".join(json.dumps(cases[i], sort_keys=True, ensure_ascii=False)
+    blob = "\n".join(json.dumps(cases[i], sort_keys=True, ensure_ascii=False,
+                                separators=(",", ":"))
                      for i in sorted(ids))
     return hashlib.sha256(blob.encode("utf-8")).hexdigest()[:12]
 
