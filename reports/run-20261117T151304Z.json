@@ -1,0 +1,71 @@
+{
+  "prompt_version": "base.v1",
+  "set_hash": "544b44ffb639",
+  "profile": "clean",
+  "judge_model": "not-used",
+  "rubric_version": "rubric.v1",
+  "elapsed": 7.4,
+  "set": "l12",
+  "gate": "daily",
+  "case_filter": [],
+  "stand_prompt_label": "base.v1",
+  "ran_at": "2026-11-17T15:13:04+00:00",
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "machine": {
+    "agent_calls": 1,
+    "cost_usd": 0.0009
+  },
+  "unit_tests": {
+    "l11_dir": "/course/l11",
+    "manual": {
+      "exit_code": 0,
+      "passed": 7,
+      "failed": 0,
+      "summary": "7 passed in 0.03s"
+    },
+    "generated": {
+      "exit_code": 0,
+      "passed": 23,
+      "failed": 0,
+      "summary": "23 passed in 0.06s"
+    }
+  },
+  "exit_code": 0,
+  "cases": [
+    {
+      "id": "JNT-026",
+      "set": "l12",
+      "layer": "action",
+      "gate": "daily",
+      "assertion": "joint",
+      "passed": true,
+      "skipped": false,
+      "level": 4,
+      "detail": "all checks pass",
+      "checks": [
+        {
+          "label": "disputes_window_ok",
+          "level": 1,
+          "passed": true,
+          "detail": "інструмент: window='pass'"
+        },
+        {
+          "label": "compliance_hold_flag",
+          "level": 1,
+          "passed": true,
+          "detail": "customers.compliance_hold=1"
+        },
+        {
+          "label": "cross_dispute_under_hold",
+          "level": 4,
+          "passed": true,
+          "detail": "рушій eligible=False, інструмент eligible=False, рядків спору по транзакції: 0"
+        }
+      ],
+      "answer": "I can't open a dispute for TX-0601 at this time. The eligibility check did not pass because of a restriction on your account, so I have not submitted anything.\n\nI have escalated your case to a human support agent (escalation ID 1), who will review the restriction and the dispute request. The details"
+    }
+  ]
+}
