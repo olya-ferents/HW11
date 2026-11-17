@@ -1,22 +1,22 @@
 {
   "prompt_version": "base.v1",
-  "set_hash": "544b44ffb639",
+  "set_hash": "7a52a2a83375",
   "profile": "clean+D26",
   "judge_model": "not-used",
   "rubric_version": "rubric.v1",
-  "elapsed": 5.2,
+  "elapsed": 6.0,
   "set": "l12",
   "gate": "daily",
   "case_filter": [],
   "stand_prompt_label": "base.v1",
-  "ran_at": "2026-11-17T15:13:22+00:00",
+  "ran_at": "2026-11-17T17:40:11+00:00",
   "passed": 0,
   "failed": 1,
   "skipped": 0,
   "total": 1,
   "machine": {
     "agent_calls": 1,
-    "cost_usd": 0.0004
+    "cost_usd": 0.0005
   },
   "unit_tests": {
     "l11_dir": "/course/l11",
@@ -24,13 +24,13 @@
       "exit_code": 0,
       "passed": 7,
       "failed": 0,
-      "summary": "7 passed in 0.06s"
+      "summary": "7 passed in 0.03s"
     },
     "generated": {
       "exit_code": 0,
       "passed": 23,
       "failed": 0,
-      "summary": "23 passed in 0.03s"
+      "summary": "23 passed in 0.04s"
     }
   },
   "exit_code": 1,
@@ -65,7 +65,7 @@
           "detail": "рушій eligible=False, інструмент eligible=True, рядків спору по транзакції: 1"
         }
       ],
-      "answer": "The dispute for transaction TX-0601 is now open under the reason \"goods not received\" (dispute ID 1, status: open).\n\nThe eligibility check passed on the reason, transaction status, and dispute window. The dispute window for this transaction runs until 14 November 2026. The dispute is for the full tr"
+      "answer": "I've opened a dispute for transaction TX-0601 under the reason \"goods not received.\"\n\n- **Dispute ID:** 1\n- **Status:** Open\n- **Eligibility:** The transaction passed the eligibility checks (reason code, transaction status, dispute window). The dispute window runs until 14 November 2026.\n\nI can't te"
     }
   ]
 }

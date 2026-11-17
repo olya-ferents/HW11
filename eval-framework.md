@@ -150,13 +150,13 @@ SKIP  l12  JNT-026      joint
 | `compliance_hold_flag` | 1 | pass | pass |
 | `cross_dispute_under_hold` | 4 | pass | FAIL |
 
-*(записи: `run-20261117T151304Z.json` — clean, exit 0; `run-20261117T151322Z.json` — D26, exit 1)*
+*(записи: `run-20261117T174004Z.json` — clean, exit 0; `run-20261117T174011Z.json` — D26, exit 1; `set_hash 7a52a2a83375` = еталон; після прогону контур сам зняв дефект: `/api/_test/defects` → `"active": []`)*
 
 **Що читає спільна assertion (одне речення):** вона читає одразу `engine:disputes`, `tool:check_dispute_eligibility` і `state:disputes` та падає, коли рушій каже «не можна», а інструмент каже «можна» або в `disputes` з'явився рядок по транзакції — кожне джерело окремо праве, разом ні.
 
 **Знахідки в наборі:** п'ять кейсів без `customer_id` у кейсі — `DIS-002-N`, `DIS-004-N`, `DIS-006`, `DIS-007` (L03) і `TOOL-402` (L07): стенд відповідає «no customer is signed in», тому вони червоні на будь-якому промпті — вада набору; `ORD-001` червоний через поведінку агента (зайвий виклик `get_account`); `TOOL-407` періодично червоний через шум. Кейси не правили: правка змінила б `set_hash`, і записи кроку 4 не можна було б покласти поруч. Фактично на щоденному шарі виходило 64–66 зелених із 71 (± кейс шуму), що збігається з орієнтиром еталона.
 
-**Відповідь агента з `D26`** (перші 200 символів із запису): `The dispute for transaction TX-0601 is now open under the reason "goods not received" (dispute ID 1, status: open). The eligibility check passed on the reason, transaction status, and dispute window.` — текст правдивий, дефект видно лише в стані.
+**Відповідь агента з `D26`** (перші 200 символів із запису): `I've opened a dispute for transaction TX-0601 under the reason "goods not received." - **Dispute ID:** 1 - **Status:** Open - **Eligibility:** The transaction passed the eligibility checks (reason co…` — текст правдивий, дефект видно лише в стані.
 
 **Ще одна пара джерел PayPilot, де можливий клас «кожен правий, разом ні»:** `tool:quote_fx` (котирування зі спредом) і `state:transactions` (фактично проведена сума) — кожен окремо коректний, але конвертація могла пройти не за тим курсом, що показали клієнту.
 
@@ -273,4 +273,4 @@ Alternatives
 
 **Опційна частина:** \<…\>
 
-**Додатки:** `run_eval.py` · `reports/run-20261117T152007Z.json` (v1) · `reports/run-20261117T152909Z.json` (v4) · `reports/run-20261117T151304Z.json` (clean, SET=l12) · `reports/run-20261117T151322Z.json` (D26) · `reports/<чистий клон>.json` · `adr/`
+**Додатки:** `run_eval.py` · `reports/run-20261117T170711Z.json` (v1, l03) · `reports/run-20261117T171147Z.json` (v4, l03) · `reports/run-20261117T174004Z.json` (clean, SET=l12) · `reports/run-20261117T174011Z.json` (D26) · `reports/run-20261117T155831Z.json` (чистий клон) · `reports/run-20261117T152007Z.json`, `reports/run-20261117T152909Z.json` (додаткова пара, повний шар) · `adr/`

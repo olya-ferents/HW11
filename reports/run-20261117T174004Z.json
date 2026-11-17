@@ -1,6 +1,6 @@
 {
   "prompt_version": "base.v1",
-  "set_hash": "544b44ffb639",
+  "set_hash": "7a52a2a83375",
   "profile": "clean",
   "judge_model": "not-used",
   "rubric_version": "rubric.v1",
@@ -9,14 +9,14 @@
   "gate": "daily",
   "case_filter": [],
   "stand_prompt_label": "base.v1",
-  "ran_at": "2026-11-17T15:13:04+00:00",
+  "ran_at": "2026-11-17T17:40:04+00:00",
   "passed": 1,
   "failed": 0,
   "skipped": 0,
   "total": 1,
   "machine": {
     "agent_calls": 1,
-    "cost_usd": 0.0009
+    "cost_usd": 0.0008
   },
   "unit_tests": {
     "l11_dir": "/course/l11",
@@ -24,13 +24,13 @@
       "exit_code": 0,
       "passed": 7,
       "failed": 0,
-      "summary": "7 passed in 0.03s"
+      "summary": "7 passed in 0.05s"
     },
     "generated": {
       "exit_code": 0,
       "passed": 23,
       "failed": 0,
-      "summary": "23 passed in 0.06s"
+      "summary": "23 passed in 0.05s"
     }
   },
   "exit_code": 0,
@@ -65,7 +65,7 @@
           "detail": "рушій eligible=False, інструмент eligible=False, рядків спору по транзакції: 0"
         }
       ],
-      "answer": "I can't open a dispute for TX-0601 at this time. The eligibility check did not pass because of a restriction on your account, so I have not submitted anything.\n\nI have escalated your case to a human support agent (escalation ID 1), who will review the restriction and the dispute request. The details"
+      "answer": "I'm unable to open a dispute for TX-0601 at this time. The eligibility check for this transaction did not pass because a customer-level restriction applies to your account, so I have not submitted the dispute.\n\nI have escalated your case to a human support agent (escalation ID 1), who will review th"
     }
   ]
 }
