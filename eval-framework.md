@@ -175,32 +175,33 @@ SKIP  l12  JNT-026      joint
 **Команди на чистому клоні:**
 
 ```text
-git clone <репозиторій ДЗ> l12-clean
+cd ~/paypilot
+git clone https://github.com/olya-ferents/HW11.git l12-clean
 cd l12-clean
 cp ../l12/.env .env            # налаштування оточення: STAND_DIR=../paypilot-stand-shared, L11_DIR=../l11
 docker compose run --rm eval --dry-run
 docker compose run --rm eval
-<код повернення — див. таблицю нижче>
-docker compose run --rm eval --compare reports/<v1>.json reports/<v4>.json
+echo $?                        # 1 — червоні кейси набору/агента
+docker compose run --rm eval --compare reports/run-20261117T170711Z.json reports/run-20261117T171147Z.json
 docker compose run --rm --entrypoint pytest eval tests -q
-git add reports && git commit && git push
+git add reports && git commit -m "L12 крок 6: чистий клон" && git push
 ```
 
 | Поле | Значення |
 | --- | --- |
 | Ручних кроків між клонуванням і записом | 0 (створення `.env` — налаштування оточення нестандартної розкладки, не крок контуру) |
-| Запис прогону | `reports/run-20261117T155831Z.json` |
-| `passed` / `failed`, код повернення | 66 / 5, exit 1 (ненульовий — бо є червоні кейси набору/агента) |
+| Запис прогону | `reports/run-20261117T175558Z.json`, `set_hash 58cf5b498718` (= еталон) |
+| `passed` / `failed`, код повернення | 66 / 5, exit 1 (ненульовий — червоні кейси набору/агента; еталон 64–66 зелених) |
 | Блок `unit_tests` у записі | manual `exit_code: 0` (7 passed), generated `exit_code: 0` (23 passed) |
-| Вивід `--compare` для двох записів кроку 4 (рядок висновку) | `порівнювані: однаковий set_hash, різних умов: 1 (prompt_version)` · exit 0 |
+| Вивід `--compare` для двох записів кроку 4 (рядок висновку; виконано в клоні) | `кейси, що змінили вердикт: немає` · `порівнювані: однаковий set_hash, різних умов: 1 (prompt_version)` · exit 0 |
 | Що довелося виправити, щоб клон запрацював | нічого в коді; лише `.env` зі `STAND_DIR=../paypilot-stand-shared`, `L11_DIR=../l11` — нестандартна назва теки стенду в моєму оточенні |
 
 ### Ціна прогону у двох валютах
 
 | Валюта | Значення | Джерело |
 | --- | --- | --- |
-| Машина: хвилини | 6,4 хв (386 с, base.v1) / 4,7 хв (281,6 с, base.v4) | `elapsed` у записі |
-| Машина: гроші | $0.0283 на повний щоденний прогін | `machine.cost_usd` у записі |
+| Машина: хвилини | 5,3 хв (320.4 с, чистий клон) / 2,7 хв (161–166 с, пара l03) | `elapsed` у записі |
+| Машина: гроші | $0.0288 повний щоденний прогін / ≈$0.016 набір l03 | `machine.cost_usd` у записі |
 | Людина: хвилини на «що змінилося» | вручну ≈10 · з reporting <1 | розділ 4 |
 
 ---
@@ -266,11 +267,11 @@ Alternatives
 | Перевірка на чистому клоні | Проходить |
 | --- | --- |
 | `docker compose run --rm eval` завершується без ручних кроків | так (чистий клон, 0 ручних кроків) |
-| У `reports/` з'являється запис з усіма шістьма полями версії | так (`run-20261117T155831Z.json`) |
+| У `reports/` з'являється запис з усіма шістьма полями версії | так (`run-20261117T175558Z.json`) |
 | Ненульовий код повернення при червоній перевірці | так (D26 → exit 1; 6 червоних → exit 1) |
 | Unit-тести L11 запускаються тією самою командою (блок `unit_tests`: `manual.exit_code` і `generated.exit_code` — `0`) | так |
 | Усі 20 тестів кроків зелені | так (`20 passed`) |
 
 **Опційна частина:** \<…\>
 
-**Додатки:** `run_eval.py` · `reports/run-20261117T170711Z.json` (v1, l03) · `reports/run-20261117T171147Z.json` (v4, l03) · `reports/run-20261117T174004Z.json` (clean, SET=l12) · `reports/run-20261117T174011Z.json` (D26) · `reports/run-20261117T155831Z.json` (чистий клон) · `reports/run-20261117T152007Z.json`, `reports/run-20261117T152909Z.json` (додаткова пара, повний шар) · `adr/`
+**Додатки:** `run_eval.py` · `reports/run-20261117T170711Z.json` (v1, l03) · `reports/run-20261117T171147Z.json` (v4, l03) · `reports/run-20261117T174004Z.json` (clean, SET=l12) · `reports/run-20261117T174011Z.json` (D26) · `reports/run-20261117T175558Z.json` (чистий клон) · `reports/run-20261117T152007Z.json`, `reports/run-20261117T152909Z.json` (додаткова пара, повний шар) · `adr/`
