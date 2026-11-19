@@ -20,6 +20,7 @@
 | `.gitattributes` | набори й записи — завжди з LF, на будь-якій ОС | 6 |
 | `reports/` | сюди лягають записи прогонів `run-<час>.json` | 4–6 |
 | `eval-framework.template.md` | шаблон артефакту: скопіюйте в `eval-framework.md` | 1–6, ДЗ |
+| `prompts/compose.mut.yml`, `prompts/mutants/` | підстановка мутанта промпту в стенд і приклад формату мутанта | опційне завдання |
 
 ## Підготовка
 
@@ -100,6 +101,29 @@ curl.exe -s http://localhost:8000/api/_test/prompt
 Повернутися на base.v1: `docker compose up -d`.
 
 Стенд піднімається 10–15 секунд. Мітка, яку стенд віддає в полі `version`, лишається `base.v1` за будь-якого файлу: ім'я зашите в стенді. Яка версія діє, видно лише в першому рядку тексту промпту.
+
+## Мутанти промпту (опційне завдання)
+
+Мутант — копія `base.v1.md` з однією точковою зміною. Кожен мутант лежить окремим файлом у `prompts/mutants/`. Перший рядок у кожного свій, наприклад `# PayPilot — system prompt (base.v1-mut01)`. За цим рядком контур записує `prompt_version`, тож без нього всі прогони матимуть однакову версію. Приклад формату — контрольний мутант `prompts/mutants/base.v1-ctrl.md`: зміст той самий, змінено лише порядок слів в одному реченні.
+
+Підставити мутанта, з теки стенду. `MUT` — шлях до файлу мутанта відносно теки стенду:
+
+```bash
+cd ~/paypilot/paypilot-stand
+MUT=../l12/prompts/mutants/base.v1-ctrl.md docker compose -f docker-compose.yml -f ../l12/prompts/compose.mut.yml up -d
+curl.exe -s http://localhost:8000/api/_test/prompt
+```
+
+```powershell
+cd "$HOME\paypilot\paypilot-stand"
+$env:MUT = "../l12/prompts/mutants/base.v1-ctrl.md"
+docker compose -f docker-compose.yml -f ../l12/prompts/compose.mut.yml up -d
+curl.exe -s http://localhost:8000/api/_test/prompt
+```
+
+Потім з теки кіта — звичайний прогін: `docker compose run --rm eval`. Порівняти з прогоном на `base.v1`: `--compare` має показати одну змінену умову — `prompt_version`. Повернутися на base.v1: `docker compose up -d` з теки стенду.
+
+Якщо ваш репозиторій ДЗ лежить не в `~/paypilot/l12`, замініть `../l12` в обох місцях на свою теку.
 
 ## Ціна прогонів
 
